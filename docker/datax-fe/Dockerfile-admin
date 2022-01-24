@@ -1,0 +1,17 @@
+FROM yiluxiangbei/centos7-bigdata-datax
+
+RUN mkdir -p /home/datax-web
+RUN mkdir -p /home/datax-web/data/applogs/admin
+
+COPY ./datax-admin-2.1.2.jar /home/datax-web/datax-admin.jar
+
+WORKDIR /home/datax-web
+
+COPY application-admin.yml /home/datax-web/application.yml
+COPY logback-admin.xml /home/datax-web/logback.xml
+COPY i18n /home/datax-web/i18n
+COPY mybatis-mapper /home/datax-web/mybatis-mapper
+
+ENV CLASSPATH /home/datax-web:$CLASSPATH
+
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","datax-admin.jar"]
