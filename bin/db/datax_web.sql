@@ -18,8 +18,8 @@
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
-CREATE DATABASE IF NOT EXISTS datax_web;
-USE datax_web;
+-- CREATE DATABASE IF NOT EXISTS datax_web;
+-- USE datax_web;
 -- ----------------------------
 -- Table structure for job_group
 -- ----------------------------
