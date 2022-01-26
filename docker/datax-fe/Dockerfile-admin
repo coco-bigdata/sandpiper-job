@@ -14,4 +14,24 @@ COPY mybatis-mapper /home/datax-web/mybatis-mapper
 
 ENV CLASSPATH /home/datax-web:$CLASSPATH
 
+ARG DATA_PATH=./data
+ARG SERVER_PORT=8080
+ARG DB_USERNAME=root
+ARG DB_PASSWORD=root
+ARG DB_HOST=datax-web-mysql
+ARG DB_PORT=3306
+ARG DB_DATABASE=dataxweb
+#先阶段只支持qq邮箱
+ARG MAIL_USERNAME=username
+ARG MAIL_PASSWORD=password
+ENV SERVER_PORT=${SERVER_PORT} \
+    DB_USERNAME=${DB_USERNAME} \
+    DB_PASSWORD=${DB_PASSWORD} \
+    DB_HOST=${DB_HOST} \
+    DB_PORT=${DB_PORT} \
+    DB_DATABASE=${DB_DATABASE} \
+    MAIL_USERNAME=${MAIL_USERNAME} \
+    MAIL_PASSWORD=${MAIL_PASSWORD} \
+    DATA_PATH=${DATA_PATH}:.
+
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","datax-admin.jar"]

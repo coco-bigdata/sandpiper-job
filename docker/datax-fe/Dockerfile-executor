@@ -12,4 +12,22 @@ COPY logback-executor.xml /home/datax-web/logback.xml
 
 ENV CLASSPATH /home/datax-web:$CLASSPATH
 
+ARG SERVER_PORT=8081
+ARG DATAX_ADMIN_HOST=datax-web-admin
+ARG DATAX_ADMIN_PORT=8080
+ARG EXECUTOR_PORT=9999
+ARG PYTHON_PATH=/home/datax-web/python
+ARG DATA_PATH=./data
+ARG SERVICE_LOG_PATH=/home/datax-web/logs
+ARG JSON_PATH=/home/datax-web/json
+
+ENV SERVER_PORT=${SERVER_PORT} \
+    DATAX_ADMIN_HOST=${DATAX_ADMIN_HOST} \
+    DATAX_ADMIN_PORT=${DATAX_ADMIN_PORT} \
+    EXECUTOR_PORT=${EXECUTOR_PORT} \
+    JSON_PATH=${JSON_PATH} \
+    PYTHON_PATH=${PYTHON_PATH} \
+    DATA_PATH=${DATA_PATH} \
+    SERVICE_LOG_PATH=${SERVICE_LOG_PATH}
+
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","datax-executor.jar"]
