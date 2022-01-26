@@ -1,0 +1,56 @@
+version: '3'
+services:
+  datax-web-mysql:
+    image: mysql:5.6.46
+    container_name: datax-web-mysql
+    ports:
+      - "3312:3306"
+    networks:
+      - sgcc-network
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./db/conf.d:/etc/mysql/conf.d
+      - ./db/data:/var/lib/mysql
+      - ./db/init-sql:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    restart: always
+
+  datax-web-admin:
+    build:
+      context: datax-fe
+      dockerfile: Dockerfile-admin
+    container_name: datax-web-admin
+    ports:
+      - "8012:8080"
+    networks:
+      - sgcc-network
+    volumes:
+      - ./datax-web/data:/home/datax-web/data
+      - /etc/localtime:/etc/localtime
+    depends_on:
+      - datax-web-mysql
+    restart: always
+
+  datax-web-executor:
+    build:
+      context: datax-fe
+      dockerfile: Dockerfile-executor
+    container_name: datax-web-executor
+    ports:
+      - "8013:8081"
+    networks:
+      - sgcc-network
+    volumes:
+      - ./datax-web/data:/home/datax-web/data
+      - /etc/localtime:/etc/localtime
+    depends_on:
+      - datax-web-admin
+    restart: always
+
+networks:
+  sgcc-network:
+    external: true
